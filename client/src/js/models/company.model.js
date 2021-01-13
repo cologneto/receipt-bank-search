@@ -1,5 +1,3 @@
-import { serverURL } from "../config";
-
 export default class Company {
     constructor(companyName, companyNumber, pOBox, addressLine1, addressLine2, postTown, county, country ) {
         this.companyName = companyName;
@@ -10,13 +8,5 @@ export default class Company {
         this.postTown = postTown;
         this.county = county;
         this.country = country;
-    }
-
-    async searchCompaniesByName() {
-        const response = await fetch(`${serverURL}item/${this.id}`);
-        const data = await response.json();
-        this.imageURL = data.imageURL;
-        this.model = data.model;
-        this.prodCode = data.prodCode;
     }
 }

@@ -6,15 +6,11 @@ export const renderSearchBar = () => {
     const markup = `
         <div class="search-container">
             <input type="text" placeholder="Search.." name="text">
-            <input type="hidden" name="limitStart" value="0">
-            <input type="hidden" name="limitEnd" value="10">
-            <button type="submit">Submit</button>   
+            <input type="hidden" name="limitStart" class="limitStart" value="0">
+            <input type="hidden" name="limitEnd" class="limitEnd" value="10">
+            <button type="submit" class="btn-search">Search</button>   
         </div>
     `;
-
-    const func = (e) => {
-
-    }
 
     mainContainer.insertAdjacentHTML('beforeend', markup);
 };
