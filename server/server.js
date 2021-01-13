@@ -9,8 +9,14 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-    sql.query("SELECT * FROM companies WHERE MATCH (CompanyName)\n" +
+app.get("/search", (req, res) => {
+    sql.query("SELECT CompanyName, " +
+                    "CompanyNumber, " +
+                    "RegAddress.AddressLine1, " +
+                    "RegAddress.AddressLine2" +
+                    "RegAddress.PostTown" +
+                    "RegAddress.PostCode" +
+        " FROM companies WHERE MATCH (CompanyName)\n" +
         "    AGAINST ('+receipt bank' IN BOOLEAN MODE)", (err, result) => {
         if (err) {
             console.log("error: ", err);
@@ -23,6 +29,6 @@ app.get("/", (req, res) => {
 
 });
 
-app.listen(3000, () => {
+app.listen(3030, () => {
     console.log("Server is running on port " + port + "." );
 });
