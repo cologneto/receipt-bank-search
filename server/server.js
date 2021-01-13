@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/search", (req, res) => {
     const text = req.body.text;
-    const limit = req.body.limit;
+    const start = req.body.limitStart;
+    const end = req.body.limitEnd;
 
     sql.query("SELECT CompanyName, " +
                     "CompanyNumber," +
@@ -25,7 +26,7 @@ app.post("/search", (req, res) => {
                     "Country" +
         " FROM companies WHERE MATCH (CompanyName)\n" +
         " AGAINST ('+" + text + "' IN BOOLEAN MODE)" +
-        "LIMIT " + limit.start + ", " + limit.end , (err, result) => {
+        "LIMIT " + start + ", " + end , (err, result) => {
         
         result.map((company) => {
             for (const property in company) {
@@ -39,7 +40,6 @@ app.post("/search", (req, res) => {
             console.log("error: ", err);
         }
 
-        console.log("pesho: ", result);
         res.json({ data: result });
     });
 
