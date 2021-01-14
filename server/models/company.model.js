@@ -1,8 +1,8 @@
-export default class Company {
-    constructor(companyName, companyNumber, pOBox, addressLine1, addressLine2, postTown, county, country ) {
+class Company {
+    constructor(companyName, companyNumber, postCode, addressLine1, addressLine2, postTown, county, country ) {
         this.companyName = companyName;
         this.companyNumber = companyNumber;
-        this.pOBox = pOBox;
+        this.postCode = postCode;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.postTown = postTown;
@@ -10,3 +10,5 @@ export default class Company {
         this.country = country;
     }
 }
+
+module.exports = Company;

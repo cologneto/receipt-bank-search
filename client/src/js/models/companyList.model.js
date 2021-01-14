@@ -4,7 +4,6 @@ import {serverURL} from "../config";
 export default class CompanyList {
     constructor(searchObj) {
         this.searchObj = searchObj;
-        this.companies = [];
     }
 
     async searchCompanies() {
@@ -16,6 +15,6 @@ export default class CompanyList {
             }
         });
 
-        this.companies = response.json();
+        return response.json();
     }
 }

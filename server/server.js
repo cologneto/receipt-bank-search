@@ -1,4 +1,4 @@
-import Company from "./models/company.model";
+const Company = require("./models/company.model");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -32,7 +32,7 @@ app.post("/search", (req, res) => {
 
     sql.query("SELECT SQL_CALC_FOUND_ROWS CompanyName, " +
                     "CompanyNumber," +
-                    "POBox," +
+                    "PostCode," +
                     "AddressLine1," +
                     "AddressLine2," +
                     "PostTown," +
@@ -41,6 +41,9 @@ app.post("/search", (req, res) => {
         " FROM companies WHERE MATCH (CompanyName)\n" +
         " AGAINST ('+" + text + "' IN BOOLEAN MODE)" +
         "LIMIT " + limitStart + ", " + limitEnd , (err, result) => {
+            if (err) {
+                console.log("error: ", err);
+            }
 
             sql.query('SELECT FOUND_ROWS() ;' , (error, count) => {
 
@@ -48,29 +51,21 @@ app.post("/search", (req, res) => {
                     console.log("error: ", error);
                 }
 
-                result.map((cmp) => {
+                const companies = result.map((cmp) => {
                     for (const property in cmp) {
                         cmp[property] = cmp[property].replace(/["]+/g, '');
                     }
 
-                    const company = new Company(cmp.CompanyName, cmp.CompanyNumber, cmp.POBox, cmp.AddressLine1, cmp.AddresLine2, cmp.PostTown, cmp.County, cmp.Country);
+                    const company = new Company(cmp.CompanyName, cmp.CompanyNumber, cmp.PostCode, cmp.AddressLine1, cmp.AddressLine2, cmp.PostTown, cmp.County, cmp.Country);
 
                     return company;
                 });
 
                 console.log(count);
 
-                res.json({ data: result });
+                res.json({ data: {companies, count} });
             });
-
-        if (err) {
-            console.log("error: ", err);
-        }
-
-
     });
-
-
 });
 
 app.listen(port, () => {

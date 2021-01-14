@@ -2,8 +2,8 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { renderSearchBar } from "./views/searchBarView";
 import Search from "./models/search.model"
-import Item from "./models/search.model"
 import CompanyList from "./models/companyList.model";
+import { renderCompanyFromList } from "./views/companyListView";
 
 const state = {};
 
@@ -17,26 +17,30 @@ document.addEventListener("click", async e => {
 
     if (targetTagName === "BUTTON") {
         if (targetClList.contains("btn-search")) {
-            state.text = document.querySelector('input[name="text"]').value;
-            state.limitStart = document.querySelector('.limitStart').value;
-            state.limitEnd = document.querySelector('.limitEnd').value;
+            const text = document.querySelector('input[name="text"]').value;
+            const limitStart = document.querySelector('.limitStart').value;
+            const limitEnd = document.querySelector('.limitEnd').value;
 
             const searchButton = e.target;
-            const searchObj = new Search(state.text, state.limitStart, state.limitEnd);
+            const searchObj = new Search(text, limitStart, limitEnd);
             const companiesList =  new CompanyList(searchObj);
             searchButton.disabled = true;
 
             try{
-                state.companies = await companiesList.searchCompanies();
+                const companiesData = await companiesList.searchCompanies();
                 searchButton.disabled = false;
-                state.companies = companies;
-                console.log(searchObj);
+                state.companies = companiesData.data.companies;
+                state.companiesCount = companiesData.data.count[0]['FOUND_ROWS()'];
+                state.searchObj = searchObj;
+                console.log(state.companiesCount);
+                console.log(state.companies);
+
+                state.companies.forEach(company => {
+                    renderCompanyFromList(company);
+                })
             } catch (e) {
                console.log(e);
             }
-
-
-
         }
     }
 });
