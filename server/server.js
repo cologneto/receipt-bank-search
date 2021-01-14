@@ -56,12 +56,17 @@ app.post("/search", (req, res) => {
                         cmp[property] = cmp[property].replace(/["]+/g, '');
                     }
 
-                    const company = new Company(cmp.CompanyName, cmp.CompanyNumber, cmp.PostCode, cmp.AddressLine1, cmp.AddressLine2, cmp.PostTown, cmp.County, cmp.Country);
+                    const company = new Company(cmp.CompanyName,
+                                                cmp.CompanyNumber,
+                                                cmp.PostCode,
+                                                cmp.AddressLine1,
+                                                cmp.AddressLine2,
+                                                cmp.PostTown,
+                                                cmp.County,
+                                                cmp.Country);
 
                     return company;
                 });
-
-                console.log(count);
 
                 res.json({ data: {companies, count} });
             });

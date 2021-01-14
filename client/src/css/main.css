@@ -1,0 +1,72 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+}
+
+button[type=submit], button[type=button] {
+    float: right;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+button[type=button] {
+    float: none;
+}
+
+button:disabled,
+button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.main-container {
+    width: 600px;
+    height: 50px;
+    margin: auto;
+}
+
+.company-container {
+    margin: 10px 0;
+    padding: 0 10px;
+}
+
+.company-list-container {
+    padding-top: 60px;
+    color: #666666;
+}
+
+.company-container .name-container {
+    text-decoration: underline;
+    color: #555555;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.company-container .number-container, .company-container .address-container {
+    font-size: 0.8rem;
+}
+
+.no-results-container, .results-count-container {
+    text-align: center;
+    font-style: italic;
+}
+
+.load-more-btn-container {
+    text-align: center;
+}
